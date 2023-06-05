@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "955313604600",
+    "project_id": "event-discovery-a86e7",
+    "storage_bucket": "event-discovery-a86e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955313604600:android:23b826afea7a68bbab380d",
+        "android_client_info": {
+          "package_name": "com.example.event_discovery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvuf6WKyX9qVagHMDb2NAgxACTnM2Dzc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
