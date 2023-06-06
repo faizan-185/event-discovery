@@ -47,7 +47,6 @@ class _HomeState extends State<Home> {
       drawer: const MyDrawer(),
       body: loading ? const Center(child: CircularProgressIndicator(color: kPrimaryColor,)) : ListView(
         shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
         padding: const EdgeInsets.all(20),
         children: [
           Text("Explore some public Communities",style: textStylePrimary12,),
@@ -118,9 +117,9 @@ class _HomeState extends State<Home> {
           SizedBox(height: 20,),
           communities.length == 0 ? Center(child: Text("No Communities To Show")) :
           ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: communities.length,
-            physics: NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index){
               String communityUid = communities[index].id;
               Map<String, dynamic> community = communities[index].data() as Map<String, dynamic>;

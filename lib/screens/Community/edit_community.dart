@@ -435,8 +435,10 @@ class _EditCommunityState extends State<EditCommunity> {
                           return userUid!=MyUser.uid ? Card(
                               elevation: 3,
                               child: ListTile(
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(user['profile_url']),
+                                leading: user['profile_url'] != null ? CircleAvatar(
+                                  backgroundImage:  NetworkImage(user['profile_url']),
+                                ) : CircleAvatar(
+                                  backgroundImage:  AssetImage("images/dummy_user.png"),
                                 ),
                                 title: Text("${user['first_name']} ${user['last_name']}", style: textStylePrimary15,),
                                 subtitle: Text(user['email'], style: textStylePrimary12,),

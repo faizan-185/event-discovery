@@ -329,7 +329,7 @@ class _CommunityCreateState extends State<CommunityCreate> {
                     _logo = downloadUrl;
                   });
                 }).catchError((error) {
-                  // Handle errors when uploading the profile photo
+
                 });
                 CollectionReference communitiesRef = firestore.collection('communities');
                 DocumentReference newCommunityRef = communitiesRef.doc();
@@ -345,6 +345,7 @@ class _CommunityCreateState extends State<CommunityCreate> {
                   'members': [MyUser.uid],
                   'is_private': isPrivate
                 });
+                ScaffoldMessenger.of(context).showSnackBar(successSnackBar("Community Joined, See All new events in this community."));
                 setState(() {
                   communityUid = newCommunityRef.id;
                   loading = false;

@@ -202,7 +202,12 @@ class _LogInScreenState extends State<LogInScreen> {
                         MyUser.zip = documentSnapshot.get('zip');
                         MyUser.email = documentSnapshot.get('email');
                         MyUser.bio = documentSnapshot.get('bio');
-                        MyUser.events = documentSnapshot.get('events');
+                        try{
+                          MyUser.events = documentSnapshot.get('events')?? [];
+                        }
+                        catch(e){
+                          MyUser.events = [];
+                        }
                         Navigator.push(
                           context,
                           MaterialPageRoute(

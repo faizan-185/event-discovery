@@ -142,7 +142,30 @@ class _ViewCommunityState extends State<ViewCommunity> {
                               builder: (context) => ViewCommunity(communityUid: widget.communityUid),
                             ),
                           );
-                        }) : SizedBox()
+                        }) : SizedBox(),
+                    community['members'].contains(MyUser.uid) ?
+                    PrimaryButton(buttonText: Text("Leave Community", style: textButton.copyWith(color: kWhiteColor),), onClick: ()async{
+                      setState(() {
+                        loading = true;
+                      });
+                      DocumentReference documentReference = firestore.collection('communities').doc(widget.communityUid);
+                      setState(() {
+                        community['members'].remove(MyUser.uid);
+                      });
+                      await documentReference.update({
+                        "members": community['members'],
+                      });
+                      setState(() {
+                        loading = false;
+                      });
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewCommunity(communityUid: widget.communityUid),
+                        ),
+                      );
+                    }) : SizedBox()
                   ],
                 ),
                 !community['members'].contains(MyUser.uid) ?
@@ -173,11 +196,13 @@ class _ViewCommunityState extends State<ViewCommunity> {
                                 ),
                               );
                             },
-                            leading: CircleAvatar(
-                              backgroundImage: NetworkImage(user['profile_url']),
+                            leading: user['profile_url'] != null ? CircleAvatar(
+                              backgroundImage:  NetworkImage(user['profile_url']),
+                            ) : CircleAvatar(
+                              backgroundImage:  AssetImage("images/dummy_user.png"),
                             ),
-                            title: Text("${user['first_name']} ${user['last_name']}", style: textStylePrimary15,),
-                            subtitle: Text(user['email'], style: textStylePrimary12,),
+                            title: Text("${user['first_name']??""} ${user['last_name']??""}", style: textStylePrimary15,),
+                            subtitle: Text(user['email']??"", style: textStylePrimary12,),
                             trailing: Text((community['creator'] == userUid) ? "Admin" : ""),
                           )
                         );
@@ -189,12 +214,13 @@ class _ViewCommunityState extends State<ViewCommunity> {
                 Center(
                   child: Text("Join Community to see details", style: textStylePrimary12,),
                 ) : ListView(
-                  physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   children: [
                     Text("New Events for this community", style: textStylePrimary12,),
                     SizedBox(height: 20,),
                     ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: events.length,
                       itemBuilder: (BuildContext context, int index){
@@ -267,7 +293,7 @@ class _ViewCommunityState extends State<ViewCommunity> {
                                       ],
                                     ),
                                   ),
-                                  SizedBox(
+                                  community['creator']!=MyUser.uid ? SizedBox(
                                     height: 50,
                                     width: 100,
                                     child: PrimaryButton(
@@ -293,7 +319,7 @@ class _ViewCommunityState extends State<ViewCommunity> {
                                         );
                                       },
                                     ),
-                                  ),
+                                  ) : SizedBox(),
                                   SizedBox(height: 10,)
                                 ],
                               )
